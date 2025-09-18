@@ -1,4 +1,5 @@
 ##lamda scrpit
+## This is combined script for code 1 and 2 
 import json
 import pandas as pd
 import boto3

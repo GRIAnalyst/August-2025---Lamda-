@@ -1,6 +1,6 @@
 ##lamda scrpit
 ## This is combined script for code 1 and 2 
-import json
+## This is full scrpit from combining data to cleaning it 
 import pandas as pd
 import boto3
 import logging

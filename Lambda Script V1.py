@@ -1,7 +1,4 @@
-##lamda scrpit
-## This is combined script for code 1 and 2 
-## This is full scrpit from combining data to cleaning it  
-## Test 25/09/.2025
+##Test 
 import pandas as pd
 import boto3
 import logging

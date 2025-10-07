@@ -2,11 +2,11 @@ name: Deploy Lambda for August 2025
 
 on:
   push:
-    paths:
-      - 'Development/August 2025/Lambda Script V1.py'
     branches:
       - Development
-workflow_dispatch:
+    paths:
+      - 'Development/August 2025/Lambda Script V1.py'
+  workflow_dispatch:
 
 jobs:
   deploy:

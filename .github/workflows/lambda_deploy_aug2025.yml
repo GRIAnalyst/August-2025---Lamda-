@@ -1,0 +1,43 @@
+name: Deploy Lambda for August 2025
+
+on:
+  push:
+    branches:
+      - Development
+    paths:
+      - 'Development/August 2025/Lambda Script V1.py'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1
+
+    - name: Copy Python file to root
+      run: cp "Development/August 2025/Lambda Script V1.py" lambda_script_v1.py
+
+    - name: Zip Lambda function
+      run: zip function.zip lambda_script_v1.py
+
+    - name: Create Lambda function with high config
+      run: |
+        FUNCTION_NAME="data-cleaner-aug-2025-$(date +%s)"
+        aws lambda create-function \
+          --function-name $FUNCTION_NAME \
+          --runtime python3.9 \
+          --role arn:aws:iam::532303161889:role/adani-data-s3-user \
+          --handler lambda_script_v1.lambda_handler \
+          --zip-file fileb://function.zip \
+          --timeout 900 \
+          --memory-size 10240 \
+          --ephemeral-storage '{"Size":10240}'

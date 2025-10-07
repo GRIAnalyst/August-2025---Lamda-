@@ -32,12 +32,12 @@ jobs:
     - name: Create Lambda function with high config
       run: |
         FUNCTION_NAME="data-cleaner-aug-2025-$(date +%s)"
-        aws lambda create-function \
-          --function-name $FUNCTION_NAME \
-          --runtime python3.9 \
-          --role arn:aws:iam::532303161889:role/adani-data-s3-user \
-          --handler lambda_script_v1.lambda_handler \
-          --zip-file fileb://function.zip \
-          --timeout 900 \
-          --memory-size 10240 \
+        aws lambda create-function
+          --function-name $FUNCTION_NAME
+          --runtime python3.9
+          --role arn:aws:iam::532303161889:role/adani-data-s3-user
+          --handler lambda_script_v1.lambda_handler
+          --zip-file fileb://function.zip
+          --timeout 900
+          --memory-size 10240
           --ephemeral-storage '{"Size":10240}'

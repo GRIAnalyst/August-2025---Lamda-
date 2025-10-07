@@ -14,7 +14,8 @@ jobs:
 
     steps:
     - name: Checkout Development branch
-      uses: actions/checkout@v3with:
+      uses: actions/checkout@v3
+      with:
     ref: Development
 
     - name: Configure AWS credentials

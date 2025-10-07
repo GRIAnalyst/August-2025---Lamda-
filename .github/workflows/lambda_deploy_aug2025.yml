@@ -5,7 +5,7 @@ on:
     branches:
       - Development
     paths:
-      - 'Development/August 2025/Lambda Script V1.py'
+      - 'August 2025/Lambda Script V1.py'
   workflow_dispatch:
 
 jobs:
@@ -18,10 +18,12 @@ jobs:
       with:
         ref: Development
 
-    - name: Debug - List files
+    - name: Debug - Print working directory and list files
       run: |
         pwd
+        echo "Listing repository contents:"
         ls -la
+        echo "Listing August 2025 directory:"
         ls -la "August 2025"
 
     - name: Copy Python file to root
@@ -41,11 +43,11 @@ jobs:
       run: |
         FUNCTION_NAME="data-cleaner-aug-2025-$(date +%s)"
         aws lambda create-function \
-          --function-name "$FUNCTION_NAME" \
+          --function-name $FUNCTION_NAME \
           --runtime python3.9 \
           --role arn:aws:iam::532303161889:role/adani-data-s3-user \
           --handler lambda_script_v1.lambda_handler \
           --zip-file fileb://function.zip \
           --timeout 900 \
           --memory-size 10240 \
-          --ephemeral-storage '{"Size":10240}'
+          --ephemeral-storage Size=10240

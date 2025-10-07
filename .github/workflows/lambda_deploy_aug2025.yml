@@ -18,6 +18,7 @@ jobs:
       with:
         ref: Development
 
+  #Test
     # Debug steps start
     - name: Print working directory
       run: pwd

@@ -37,7 +37,7 @@ jobs:
         aws lambda create-function \
           --function-name $FUNCTION_NAME \
           --runtime python3.9 \
-          --arn:aws:iam::532303161889:role/lambda-execution-rol \
+          --role arn:aws:iam::532303161889:role/lambda-execution-rol \
           --handler lambda_script_v1.lambda_handler \
           --zip-file fileb://function.zip \
           --timeout 900 \

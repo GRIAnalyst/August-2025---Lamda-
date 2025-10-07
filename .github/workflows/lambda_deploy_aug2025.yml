@@ -40,3 +40,5 @@ jobs:
           --timeout 900 \
           --memory-size 10240 \
           --ephemeral-storage '{"Size":10240}'
+on:
+  workflow_dispatch:

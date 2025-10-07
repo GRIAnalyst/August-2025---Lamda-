@@ -18,17 +18,14 @@ jobs:
       with:
         ref: Development
 
-  #Test
-    # Debug steps start
-    - name: Print working directory
-      run: pwd
+    - name: Debug - List files
+      run: |
+        pwd
+        ls -la
+        ls -la "August 2025"
 
-    - name: List all files recursively
-      run: ls -alR
-
-    - name: List files in August 2025
-      run: ls -al "Development/August 2025"
-    # Debug steps end
+    - name: Copy Python file to root
+      run: cp "August 2025/Lambda Script V1.py" lambda_script_v1.py
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -37,9 +34,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
 
-    - name: Copy Python file to root
-      run: cp "Development/August 2025/Lambda Script V1.py" lambda_script_v1.py
-
     - name: Zip Lambda function
       run: zip function.zip lambda_script_v1.py
 
@@ -47,7 +41,7 @@ jobs:
       run: |
         FUNCTION_NAME="data-cleaner-aug-2025-$(date +%s)"
         aws lambda create-function \
-          --function-name $FUNCTION_NAME \
+          --function-name "$FUNCTION_NAME" \
           --runtime python3.9 \
           --role arn:aws:iam::532303161889:role/adani-data-s3-user \
           --handler lambda_script_v1.lambda_handler \

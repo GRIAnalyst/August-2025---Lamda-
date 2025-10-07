@@ -5,7 +5,7 @@ on:
     paths:
       - 'Development/August 2025/Lambda Script V1.py'
     branches:
-      - main
+      - Development
 
 jobs:
   deploy:

@@ -1,7 +1,9 @@
-name: Deploy Lambda Function
+name: Deploy Lambda for September 2025
 
 on:
   push:
+    paths:
+      - 'Development/September 2025/**'  # Only trigger when this folder is updated
     branches:
       - main
 
@@ -21,16 +23,16 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Zip Lambda function
-      run: zip -r function.zip lambda_function.py
+      run: zip -r function.zip Development/"September 2025"/adani_data_cleaning.py
 
     - name: Create Lambda function with high config
       run: |
-        FUNCTION_NAME="data-cleaner-$(date +%s)"
+        FUNCTION_NAME="data-cleaner-sep-2025-$(date +%s)"
         aws lambda create-function \
           --function-name $FUNCTION_NAME \
           --runtime python3.9 \
-          --role arn:aws:iam::<your-account-id>:role/<lambda-role-name> \
-          --handler lambda_function.lambda_handler \
+          --role arn:aws:iam::532303161889:role/adani-data-s3-user \
+          --handler adani_data_cleaning.lambda_handler \
           --zip-file fileb://function.zip \
           --timeout 900 \
           --memory-size 10240 \

@@ -18,23 +18,15 @@ jobs:
       with:
         ref: Development
 
-    - name: Debug - Print working directory and list files
-      run: |
-        pwd
-        echo "Listing repository contents:"
-        ls -la
-        echo "Listing August 2025 directory:"
-        ls -la "August 2025"
-
-    - name: Copy Python file to root
-      run: cp "August 2025/Lambda Script V1.py" lambda_script_v1.py
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
+
+    - name: Copy Python file to root
+      run: cp "August 2025/Lambda Script V1.py" lambda_script_v1.py
 
     - name: Zip Lambda function
       run: zip function.zip lambda_script_v1.py

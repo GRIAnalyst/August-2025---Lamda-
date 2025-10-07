@@ -18,6 +18,17 @@ jobs:
       with:
         ref: Development
 
+    # Debug steps start
+    - name: Print working directory
+      run: pwd
+
+    - name: List all files recursively
+      run: ls -alR
+
+    - name: List files in August 2025
+      run: ls -al "Development/August 2025"
+    # Debug steps end
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:

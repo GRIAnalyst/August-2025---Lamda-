@@ -32,6 +32,7 @@ jobs:
       run: zip function.zip lambda_script_v1.py
 
     - name: Create Lambda function with high config
+      id: create_lambda
       run: |
         FUNCTION_NAME="data-cleaner-aug-2025-$(date +%s)"
         aws lambda create-function \
@@ -42,4 +43,24 @@ jobs:
           --zip-file fileb://function.zip \
           --timeout 900 \
           --memory-size 10240 \
-          --ephemeral-storage Size=10240
+          --ephemeral-storage Size=10240 \
+          --output json > lambda_output.json
+
+        echo "FUNCTION_NAME=$FUNCTION_NAME" >> $GITHUB_ENV
+
+    - name: Wait for Lambda to become active
+      run: |
+        echo "Waiting for Lambda function to become active..."
+        aws lambda wait function-active --function-name $FUNCTION_NAME
+
+    - name: Invoke the newly created Lambda
+      run: |
+        echo "Invoking Lambda function: $FUNCTION_NAME"
+        aws lambda invoke \
+          --function-name $FUNCTION_NAME \
+          --invocation-type RequestResponse \
+          --payload '{}' \
+          output.json
+
+        echo "Lambda execution output:"
+        cat output.json
